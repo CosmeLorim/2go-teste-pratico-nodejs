@@ -1,0 +1,17 @@
+{
+  "restartable": "rs",
+  "name": "nodemon",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "ext": "js",
+  "nodemonConfig": {
+    "ignore": ["test/*", "docs/*"],
+    "delay": "2500"
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "SECRET_TOKEN": "SECRET_TOKEN"
+  }
+}

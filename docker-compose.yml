@@ -1,0 +1,27 @@
+version: '3.3'
+volumes:
+  data:
+services:
+  postgres:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgres
+    environment:
+      - POSTGRES_PASSWORD=12345
+  app:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "cosme.lorim@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-compose-network
+
+networks: 
+  postgres-compose-network:
+    driver: bridge

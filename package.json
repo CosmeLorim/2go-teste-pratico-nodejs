@@ -1,0 +1,34 @@
+{
+  "name": "2go",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon --config nodemon.json",
+    "prod": "NODE_ENV=production node src/index",
+    "db:migrate": "sequelize db:migrate",
+    "db:reset": "sequelize-cli db:migrate:undo:all && sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:CosmeLorim/2go-teste-pratico-nodejs.git"
+  },
+  "author": "Cosme da Silva Lorim <cosme.lorim@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/CosmeLorim/2go-teste-pratico-nodejs#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "date-fns": "^2.11.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.0.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.5"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1"
+  }
+}
