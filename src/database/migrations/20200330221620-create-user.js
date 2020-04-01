@@ -28,11 +28,20 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE(),
       },
-      photo: {
+      cpf: {
+        allowNull: true,
+        type: Sequelize.STRING(14),
+      },
+      profilePic: {
         allowNull: true,
         type: Sequelize.STRING(255)
       },
       validatedCode: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN(),
+      },
+      allowedNotifications: {
         allowNull: false,
         defaultValue: false,
         type: Sequelize.BOOLEAN(),

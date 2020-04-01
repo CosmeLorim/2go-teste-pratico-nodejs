@@ -27,11 +27,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       type: DataTypes.DATE(),
     },
-    photo: {
+    cpf: {
+      allowNull: true,
+      type: DataTypes.STRING(14),
+    },
+    profilePic: {
       allowNull: true,
       type: DataTypes.STRING(255),
     },
     validatedCode: {
+      allowNull: false,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN(),
+    },
+    allowedNotifications: {
       allowNull: false,
       defaultValue: false,
       type: DataTypes.BOOLEAN(),
