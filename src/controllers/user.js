@@ -1,21 +1,12 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const dateFns = require('date-fns')
 
 const { sequelize, Sequelize } = require('../models/index')
 const userModel = require('../models/users')(sequelize, Sequelize)
-
 const { or } = require('sequelize')
 
-const getExpiresTokenMS = ({ days }) => {
-  const now = new Date()
-  const dateExpiration = dateFns.addDays(now, days)
-  return dateExpiration.getTime()
-}
 
 /**
- * Efetua login de usuários.
- *
  * @param {Application} application
  * @param {Resquest} request
  * @param {Response} response
@@ -49,7 +40,7 @@ exports.register = async (req, res) => {
 
     const token = jwt.sign({
       id: user.id
-    }, process.env.SECRET_KEY, { expiresIn: '7d' })
+    }, process.env.SECRET_KEY)
 
     res.status(200).send({ success: true, token })
 
@@ -60,8 +51,6 @@ exports.register = async (req, res) => {
 }
 
 /**
- * Efetua login de usuários.
- *
  * @param {Application} application
  * @param {Resquest} request
  * @param {Response} response
@@ -103,14 +92,58 @@ exports.validadeCode = async (req, res) => {
 
 
 /**
- * Efetua login de usuários.
- *
  * @param {Application} application
  * @param {Resquest} request
  * @param {Response} response
  */
 exports.finalizeRegistration = async (req, res) => {
-  
+  const { fullName, birthDate, cpf, token, profilePic } = req.body
+  try {
+    const tokenDecoded = await tokenDecode(token, process.env.SECRET_KEY)
+    const user = userModel.findOne({ where: { id: tokenDecoded.id } })
+    if (user === null) {
+      return res.status(400).send('Token inválido')
+    }
+
+    await userModel.update(
+      { fullName, birthDate, cpf, profilePic },
+      { where: { id: tokenDecoded.id } },
+    )
+
+    res.status(200).send({
+      success: true,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(400).send()
+  }
+}
+
+/**
+ * @param {Application} application
+ * @param {Resquest} request
+ * @param {Response} response
+ */
+exports.allowedNotifications = async (req, res) => {
+  try {
+    const tokenDecoded = await tokenDecode(token, process.env.SECRET_KEY)
+    const user = userModel.findOne({ where: { id: tokenDecoded.id } })
+    if (user === null) {
+      return res.status(400).send('Token inválido')
+    }
+
+    await userModel.update(
+      { allowedNotifications: true },
+      { where: { id: tokenDecoded.id } },
+    )
+
+    res.status(200).send({
+      success: true,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(400).send()
+  }
 }
 
 const tokenDecode = (token, secretKey) => new Promise(resolve => {
