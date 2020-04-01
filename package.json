@@ -18,7 +18,6 @@
   "homepage": "https://github.com/CosmeLorim/2go-teste-pratico-nodejs#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
-    "date-fns": "^2.11.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
